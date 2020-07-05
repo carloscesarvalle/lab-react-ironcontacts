@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import contacts from './contacts.json';
+import 'bulma/css/bulma.css';
 
 class App extends Component {
 
@@ -14,12 +15,12 @@ class App extends Component {
 // Function to show contacts in the DOM
 
 showContact = () => {
-  let contactList = this.state.showingContacts.map((eachContact, id)=>{
+  let contactList = this.state.showingContacts.map((eachContact, i)=>{
         return <tr key={eachContact.id}>
           <td><img style={{width:"80px"}} src={eachContact.pictureUrl} alt={eachContact.name}></img></td>
           <td>{eachContact.name}</td> 
           <td>{eachContact.popularity}</td>
-          <td><button>Delete</button></td>
+          <td><button onClick={()=>this.deleteButton(i)}>Delete</button></td>
         </tr>
   })
   return contactList
@@ -66,6 +67,27 @@ sortByPopularity = () => {
     showingContacts: showingContactsCopy
   })
 }
+
+// Add delete button
+
+deleteButton = (index) => {
+  console.log(index, this.state.showingContacts[index])
+  let showingContactsCopy = [...this.state.showingContacts]
+  showingContactsCopy.splice(index,1)
+
+  this.setState({
+    showingContacts:showingContactsCopy,
+  })
+  
+
+  
+}
+
+
+
+
+
+
 // display in the DOM
 
 render() {
