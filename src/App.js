@@ -5,7 +5,7 @@ class App extends Component {
 
   state = {
     showingContacts: [...contacts].splice(0,5),
-    restOfContacts: [...contacts].splice(5),
+    restOfContacts: [...contacts].splice(5)
   }
 
 showContact = () => {
@@ -19,11 +19,30 @@ showContact = () => {
   return contactList
 }
 
+addContact = () => {
 
+  let randomIndex = Math.floor(Math.random()*this.state.restOfContacts.length)
+  let restOfContactsCopy = [...this.state.restOfContacts]
+  let showingContactsCopy = [...this.state.showingContacts]
+
+  showingContactsCopy.push(restOfContactsCopy[randomIndex])
+  restOfContactsCopy.splice(randomIndex,1)
+
+  this.setState ({
+    showingContacts: showingContactsCopy,
+    restOfContacts: restOfContactsCopy
+  })
+}
 
   render() {
+
+console.log(this.state.showingContacts, this.state.restOfContacts)
+
     return (
       <div>
+
+         <button onClick={this.addContact}>Add Random Contact</button>
+
         <table>
           <thead>
           <tr>
