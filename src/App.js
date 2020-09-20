@@ -6,27 +6,34 @@ import contacts from './contacts.json';
 
 const App = () => {
 
-//Using the spread operator to make a copy of the array named Contacts. After I sliced up the first 5 and set the state with them. 
+const [celebrities, setCelebrities] = useState([...contacts].splice(0,5))
+const [restOfCelebrities, setRestOfCelebrities] = useState([...contacts].splice(5))
 
-let firstFive = [...contacts].slice(0,5)
-const [state, setState] = useState(firstFive)
+//Creating a function called showContacts to display the first 5 celebrities on DOM
+const showContacts = () => {
+  console.log(restOfCelebrities)
+  let contactList = celebrities.map((each)=> {
+    return <tr key={each.id}>
+              <td><img src={each.pictureUrl} alt="no photo"/></td>
+              <td>{each.name}</td>
+              <td>{each.popularity}</td>
+            </tr>})
+  return contactList
+}
 
-//Using the spread operator to make a copy of the array named Contacts. I sliced up from element with index 6 and up.
-let restOfCelebrities = [...contacts].slice(6)
 
-//Using Math Js library to select a random element from the array. It's a random number based on a random index position.  
-let randomCelebrity = restOfCelebrities[Math.floor(Math.random()*restOfCelebrities.length)]
-
-//Creating a function called displayFirstFive to display the first 5 celebrities on DOM
-let displayFirstFive = firstFive.map((each, i)=> {return <tr key={each.id}><td><img src={each.pictureUrl} alt="no photo"/></td><td>{each.name}</td><td>{each.popularity}</td></tr>})
-
+ 
 //Creating a function that's going to push a random celebrity into the state (original array with 5 celebrities)
 const addRandomCelebrity = () => {
-  console.log("I'm ckicking")
-  let newArray = firstFive.push(randomCelebrity)
-  setState(newArray)
-  console.log(state)
-}
+    let randomIndex = Math.floor(Math.random() * restOfCelebrities.length);
+    let randomCelebrity = restOfCelebrities[randomIndex];
+    let newRestOfCelebrities = [...restOfCelebrities];
+    let newCelebrities = [...celebrities];
+    newRestOfCelebrities.splice(randomIndex, 1);
+    newCelebrities.push(randomCelebrity);
+    setCelebrities(newCelebrities);
+    setRestOfCelebrities(newRestOfCelebrities);
+  }
 
 
   return (
@@ -39,7 +46,7 @@ const addRandomCelebrity = () => {
         <th>Popularity</th>
         </tr>
         <th>
-        {displayFirstFive}
+        {showContacts()}
         </th>
       </table>
     </div>
