@@ -23,22 +23,24 @@ const showContacts = () => {
 
 
  
-//Creating a function that's going to push a random celebrity into the state (original array with 5 celebrities)
+//Creating a function that's going to push a random celebrity into the state of celebrities (original array with 5 celebrities)
 const addRandomCelebrity = () => {
+//Selecting a random index number from restOfCelbrities array  
     let randomIndex = Math.floor(Math.random() * restOfCelebrities.length);
+//Selecting a random celebrity based on a random index number
     let randomCelebrity = restOfCelebrities[randomIndex];
     let newRestOfCelebrities = [...restOfCelebrities];
     let newCelebrities = [...celebrities];
     newRestOfCelebrities.splice(randomIndex, 1);
     newCelebrities.push(randomCelebrity);
     setCelebrities(newCelebrities);
-    setRestOfCelebrities(newRestOfCelebrities);
+    setRestOfCelebrities(newRestOfCelebrities);    
   }
 
 
-  return (
+  return ( 
     <div>
-      <button onClick={()=>addRandomCelebrity()}>Add Random Contact</button>
+      <button onClick={addRandomCelebrity}>Add Random Contact</button>
       <table>
         <tr>
         <th>Picture</th>
